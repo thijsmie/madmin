@@ -225,7 +225,9 @@ def process_factuur_regel_inkoop(regel, factuur_id, regels_processed):
 		stukprijs_voorraad = regel['stukprijs']
 		if 'borrelmarge' in product:
 			stukprijs_voorraad = (stukprijs_voorraad * (1000+product['borrelmarge']))/1000
-		vrd_id = add_voorraad(regel['product_id'], regel['stukprijs'], regel['btw'], -regel['aantal'])
+			if (stukprijs_voorraad * (1000+product['borrelmarge']))%1000 > 0:
+				stukprijs_voorraad += 1
+		vrd_id = add_voorraad(regel['product_id'], stukprijs_voorraad, regel['btw'], -regel['aantal'])
 		
 		try:
 			q = Query("""INSERT INTO tblfactuurregel (
@@ -279,7 +281,6 @@ def process_factuur_regel_inkoop(regel, factuur_id, regels_processed):
 def process_factuur_regel_verkoop(regel, factuur_id, regels_processed):
 	if 'product_id' in regel:
 		verbruik = use_voorraad(regel['product_id'], regel['aantal'])
-		product = query_product(regel['product_id'])[0]
 		try:
 			q = Query("""INSERT INTO tblfactuurregel (
 			                 frgl_fac_id, frgl_type,
@@ -298,7 +299,6 @@ def process_factuur_regel_verkoop(regel, factuur_id, regels_processed):
 			btw = totaalprijs*vc['btw']/(1000+vc['btw'])
 			if totaalprijs*vc['btw']%(1000+vc['btw']) > (999+vc['btw'])/2:
 				btw += 1
-			totaalprijs = int(totaalprijs * (1 + product['borrelmarge'] / 10000.))
 			try:
 				q.run((factuur_id, vc['id'], vc['aantal'],
 				       vc['stukprijs'], totaalprijs, btw))
