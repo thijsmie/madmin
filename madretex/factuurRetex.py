@@ -116,8 +116,9 @@ def factuurRetex(factuur, budget):
         info['speciaalsaldona'] = 0.0
         
     clear()
-    texCode = template % info
     path = "/".join(sys.argv[0].split("/")[:-1])
+    info['path'] = path
+    texCode = template % info
 
     texFilename = path + "/" + "facturen/" + _assoc + "_" + str(info['factuurnummer']) + ".tex"
     auxFilename = path + "/" + _assoc + "_" + str(info['factuurnummer']) + ".aux"
