@@ -177,7 +177,7 @@ class factuurDetail(Container):
 	def resize(self, width, height):
 		self.width = width
 		self.height = height
-		swidth = int(width/3)
+		swidth = int(width/3.)
 		hwidth = 2*int(width/3.)
 		voffset = 0
 		self.infobox.resize(width, 0)
@@ -200,7 +200,7 @@ class factuurDetail(Container):
 		self.setChildPos(self.factuurOverigeTotaalLabelIdx, 0, height-1)
 		
 		# middle column
-		self.factuurBorrelTotaalLabel.resize(swidth, 1)
+		self.factuurBorrelTotaalOnafgerondLabel.resize(swidth, 1)
 		self.setChildPos(self.factuurBorrelTotaalOnafgerondLabelIdx, swidth, height-4)
 		self.factuurKantineTotaalOnafgerondLabel.resize(swidth, 1)
 		self.setChildPos(self.factuurKantineTotaalOnafgerondLabelIdx, swidth, height-3)
