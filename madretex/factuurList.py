@@ -1,6 +1,7 @@
 from gui_lib.container import Container
 from gui_lib.label import Label
 from gui_lib.listbox import Listbox
+from gui_lib.core import end
 from verenigingNaamCoupler import getVerenigingNaam
 from factuurRetex import factuurRetex
 import curses
@@ -20,8 +21,11 @@ class factuurListItem(Label):
     
     def keyEvent(self, key):
         if key == ord('\n'):
+            loopval = self.ppointer.budget
             for i in range(self.number, -1, -1):
-                self.ppointer.budget = factuurRetex(self.ppointer.facturen[i], self.ppointer.budget)
+                loopval = factuurRetex(self.ppointer.facturen[i], loopval)
+            print "See madmin/madretex/facturen for produced invoices"
+            end()
             
                 
     def onFocus(self):
