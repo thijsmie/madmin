@@ -169,7 +169,7 @@ class factuurDetail(Container):
 	def keyEvent(self, key):
 		if key == curses.KEY_BACKSPACE:
 			self.manager.pop()
-		else if key == ord('c'):
+		elif key == ord('c'):
 			print "test"
 		else:
 			super(factuurDetail,self).keyEvent(key)
