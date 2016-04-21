@@ -27,7 +27,7 @@ class verenigingListItem(Label):
 class leverancierListItem(Label):
 	def __init__(self, width, manager):
 		self.manager = manager
-		super(leverancierListItem,self).__init__(width, 1, 'leveranciers')
+		super(leverancierListItem,self).__init__(width, 1, 'Leveranciers en overige')
 	
 	def keyEvent(self, key):
 		if key == ord('\n'):
@@ -45,14 +45,16 @@ class verenigingList(Container):
 	def __init__(self, width, height, vereniging_list, manager):
 		super(verenigingList, self).__init__(width, height)
 		self.manager = manager
-		self.listbox = Listbox(width, height)
+		self.header = Label(width, 1, "Madmin Factuurinfo", curses.COLOR_MAGENTA)
+		self.listbox = Listbox(width, height - 1)
 		for vereniging_info in vereniging_list:
 			self.listbox.append(verenigingListItem(width,vereniging_info,manager))
 		self.listbox.append(leverancierListItem(width,manager))
-		
-		self.listboxId = self.addChild(0,0,self.listbox)
+		self.headerId = self.addChild(0,0, self.header)
+		self.listboxId = self.addChild(0,1,self.listbox)
 	
 	def resize(self, width, height):
 		self.width = width
 		self.height = height
-		self.listbox.resize(width, height)
+		self.header.resize(width, 1)
+		self.listbox.resize(width, height-1)
