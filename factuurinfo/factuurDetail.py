@@ -164,6 +164,9 @@ class factuurDetail(Container):
 		self.factuurTotaalOnafgerondLabel = Label(0,0,"Totaal-onafgerond: " + moneyConvert(int(self.factuurBorrelTotaalOnafgerond+self.factuurKantineTotaalOnafgerond+self.factuurEmballageTotaalOnafgerond+self.factuurOverigeTotaalOnafgerond)))
 		self.factuurTotaalOnafgerondLabelIdx = self.addChild(0,0,self.factuurTotaalOnafgerondLabel)
 		
+		self.factuurAfrondingLabel = Label(0,0,"Afronding: " + moneyConvert(int(self.factuurBorrelTotaalOnafgerond - self.factuurBorrelTotaal + self.factuurKantineTotaalOnafgerond - self.factuurKantineTotaal + self.factuurEmballageTotaalOnafgerond - self.factuurEmballageTotaal + self.factuurOverigeTotaalOnafgerond - self.factuurOverigeTotaal)))
+		self.factuurAfrondingLabelIdx = self.addChild(0,0,self.factuurAfrondingLabel)
+		
 		self.resize(width, height)
 	
 	def keyEvent(self, key):
@@ -217,6 +220,8 @@ class factuurDetail(Container):
 		self.setChildPos(self.factuurTotaalLabelIdx, hwidth, height-3)
 		self.factuurTotaalOnafgerondLabel.resize(swidth, 1)
 		self.setChildPos(self.factuurTotaalOnafgerondLabelIdx, hwidth, height-2)
+		self.factuurAfrondingLabel.resize(swidth, 1)
+		self.setChildPos(self.factuurAfrondingLabelIdx, hwidth, height-1)
 
 class factuurInfobox(Container):
 	def __init__(self, width, height, factuur):
