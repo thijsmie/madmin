@@ -35,7 +35,7 @@ class factuurList(Container):
 		super(factuurList, self).__init__(width, height)
 		self.manager = manager
 		self.factuurListbox = Listbox(width, height)
-		for factuur in facturen:
+		for factuur in reversed(facturen):
 			self.factuurListbox.append(factuurListItem(width, factuur, manager))
 		
 		self.factuurListboxIndex = self.addChild(0,0, self.factuurListbox)

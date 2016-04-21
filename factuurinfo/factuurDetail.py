@@ -161,7 +161,7 @@ class factuurDetail(Container):
 		self.factuurEmballageTotaalOnafgerondLabelIdx = self.addChild(0,0,self.factuurEmballageTotaalOnafgerondLabel)
 		self.factuurOverigeTotaalOnafgerondLabel = Label(0,0,"Overigetotaal-onafgerond: " + moneyConvert(int(self.factuurOverigeTotaalOnafgerond)))
 		self.factuurOverigeTotaalOnafgerondLabelIdx = self.addChild(0,0,self.factuurOverigeTotaalOnafgerondLabel)
-		self.factuurTotaalOnafgerondLabel = Label(0,0,"Totaal-onafgerond: " + moneyConvert(int(self.factuurBorrelTotaal+self.factuurKantineTotaal+self.factuurEmballageTotaal+self.factuurOverigeTotaal)))
+		self.factuurTotaalOnafgerondLabel = Label(0,0,"Totaal-onafgerond: " + moneyConvert(int(self.factuurBorrelTotaalOnafgerond+self.factuurKantineTotaalOnafgerond+self.factuurEmballageTotaalOnafgerond+self.factuurOverigeTotaalOnafgerond)))
 		self.factuurTotaalOnafgerondLabelIdx = self.addChild(0,0,self.factuurTotaalLabel)
 		
 		self.resize(width, height)
