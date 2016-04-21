@@ -1,7 +1,6 @@
 from gui_lib.container import Container
 from gui_lib.label import Label
 from gui_lib.listbox import Listbox
-from gui_lib.core import Outredraw
 from verenigingNaamCoupler import getVerenigingNaam
 from factuurRetex import factuurRetex
 import curses
