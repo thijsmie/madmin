@@ -113,6 +113,10 @@ class factuurDetail(Container):
 		self.factuurKantineTotaal = 0
 		self.factuurEmballageTotaal = 0
 		self.factuurOverigeTotaal = 0
+		self.factuurBorrelTotaalOnafgerond = 0
+		self.factuurKantineTotaalOnafgerond = 0
+		self.factuurEmballageTotaalOnafgerond = 0
+		self.factuurOverigeTotaalOnafgerond = 0
 		
 		for regel in factuur['regels']:
 			self.factuurRegelBox.append(factuurRegel(width,1,regel))
@@ -120,18 +124,23 @@ class factuurDetail(Container):
 				type = getProductType(regel['prd_id'])
 				if type=='kantine':
 					self.factuurKantineTotaal += copysign(regel['totaalprijs'], regel['aantal'])
+					self.factuurKantineTotaalOnafgerond += regel['stukprijs'] * regel['aantal']
 				elif type=='borrel':
 					self.factuurBorrelTotaal += copysign(regel['totaalprijs'], regel['aantal'])
+					self.factuurBorrelTotaalOnafgerond += regel['stukprijs'] * regel['aantal']
 				elif type=='emballage':
 					self.factuurEmballageTotaal += copysign(regel['totaalprijs'], regel['aantal'])
+					self.factuurEmballageTotaalOnafgerond += regel['stukprijs'] * regel['aantal']
 				else:
 					self.factuurOverigeTotaal += copysign(regel['totaalprijs'], regel['aantal'])
+					self.factuurOverigeTotaalOnafgerond += regel['stukprijs'] * regel['aantal']
 			else:
 				self.factuurOverigeTotaal += copysign(regel['totaalprijs'], regel['aantal'])
+				self.factuurOverigeTotaalOnafgerond += regel['stukprijs'] * regel['aantal']
 		
 		self.factuurBorrelTotaalLabel = Label(0,0,"Borreltotaal: " + moneyConvert(int(self.factuurBorrelTotaal)))
 		self.factuurBorrelTotaalLabelIdx = self.addChild(0,0,self.factuurBorrelTotaalLabel)
-		self.factuurBorrelmargeTotaalLabel = Label(0,0,"Borrelmargetotaal: " + moneyConvert(int(round(self.factuurBorrelTotaal/1.03))))
+		self.factuurBorrelmargeTotaalLabel = Label(0,0,"Borrelmargetotaal: " + moneyConvert(int(floor(self.factuurBorrelTotaal/1.03))))
 		self.factuurBorrelmargeTotaalLabelIdx = self.addChild(0,0,self.factuurBorrelmargeTotaalLabel)
 		self.factuurKantineTotaalLabel = Label(0,0,"Kantinetotaal: " + moneyConvert(int(self.factuurKantineTotaal)))
 		self.factuurKantineTotaalLabelIdx = self.addChild(0,0,self.factuurKantineTotaalLabel)
@@ -142,18 +151,34 @@ class factuurDetail(Container):
 		self.factuurTotaalLabel = Label(0,0,"Totaal: " + moneyConvert(int(self.factuurBorrelTotaal+self.factuurKantineTotaal+self.factuurEmballageTotaal+self.factuurOverigeTotaal)))
 		self.factuurTotaalLabelIdx = self.addChild(0,0,self.factuurTotaalLabel)
 		
+		# added details:
+		
+		self.factuurBorrelTotaalOnafgerondLabel = Label(0,0,"Borreltotaal-onafgerond: " + moneyConvert(int(self.factuurBorrelTotaalOnafgerond)))
+		self.factuurBorrelTotaalOnafgerondLabelIdx = self.addChild(0,0,self.factuurBorrelTotaalOnafgerondLabel)
+		self.factuurKantineTotaalOnafgerondLabel = Label(0,0,"Kantinetotaal-onafgerond: " + moneyConvert(int(self.factuurKantineTotaalOnafgerond)))
+		self.factuurKantineTotaalOnafgerondLabelIdx = self.addChild(0,0,self.factuurKantineTotaalOnafgerondLabel)
+		self.factuurEmballageTotaalOnafgerondLabel = Label(0,0,"Emballagetotaal-onafgerond: " + moneyConvert(int(self.factuurEmballageTotaalOnafgerond)))
+		self.factuurEmballageTotaalOnafgerondLabelIdx = self.addChild(0,0,self.factuurEmballageTotaalOnafgerondLabel)
+		self.factuurOverigeTotaalOnafgerondLabel = Label(0,0,"Overigetotaal-onafgerond: " + moneyConvert(int(self.factuurOverigeTotaalOnafgerond)))
+		self.factuurOverigeTotaalOnafgerondLabelIdx = self.addChild(0,0,self.factuurOverigeTotaalOnafgerondLabel)
+		self.factuurTotaalOnafgerondLabel = Label(0,0,"Totaal-onafgerond: " + moneyConvert(int(self.factuurBorrelTotaal+self.factuurKantineTotaal+self.factuurEmballageTotaal+self.factuurOverigeTotaal)))
+		self.factuurTotaalOnafgerondLabelIdx = self.addChild(0,0,self.factuurTotaalLabel)
+		
 		self.resize(width, height)
 	
 	def keyEvent(self, key):
 		if key == curses.KEY_BACKSPACE:
 			self.manager.pop()
+		else if key == ord('c'):
+			print "test"
 		else:
 			super(factuurDetail,self).keyEvent(key)
 	
 	def resize(self, width, height):
 		self.width = width
 		self.height = height
-		hwidth = int(width/2.)
+		swidth = int(width/3)
+		hwidth = 2*int(width/3.)
 		voffset = 0
 		self.infobox.resize(width, 0)
 		self.setChildPos(self.infoboxIdx,0,voffset)
@@ -161,20 +186,37 @@ class factuurDetail(Container):
 		self.factuurRegelHeader.resize(width, 1)
 		self.setChildPos(self.factuurRegelHeaderIdx, 0, voffset)
 		voffset += 1
-		self.factuurRegelBox.resize(width, height - voffset - 3)
+		self.factuurRegelBox.resize(width, height - voffset - 4)
 		self.setChildPos(self.factuurRegelBoxIdx, 0, voffset)
-		self.factuurBorrelTotaalLabel.resize(hwidth, 1)
-		self.setChildPos(self.factuurBorrelTotaalLabelIdx, 0, height-3)
-		self.factuurBorrelmargeTotaalLabel.resize(hwidth, 1)
-		self.setChildPos(self.factuurBorrelmargeTotaalLabelIdx, hwidth, height-3)
-		self.factuurKantineTotaalLabel.resize(hwidth, 1)
-		self.setChildPos(self.factuurKantineTotaalLabelIdx, 0, height-2)
-		self.factuurEmballageTotaalLabel.resize(hwidth, 1)
-		self.setChildPos(self.factuurEmballageTotaalLabelIdx, hwidth, height-2)
-		self.factuurOverigeTotaalLabel.resize(hwidth, 1)
+		
+		# left colomn
+		self.factuurBorrelTotaalLabel.resize(swidth, 1)
+		self.setChildPos(self.factuurBorrelTotaalLabelIdx, 0, height-4)
+		self.factuurKantineTotaalLabel.resize(swidth, 1)
+		self.setChildPos(self.factuurKantineTotaalLabelIdx, 0, height-3)
+		self.factuurEmballageTotaalLabel.resize(swidth, 1)
+		self.setChildPos(self.factuurEmballageTotaalLabelIdx, 0, height-2)
+		self.factuurOverigeTotaalLabel.resize(swidth, 1)
 		self.setChildPos(self.factuurOverigeTotaalLabelIdx, 0, height-1)
-		self.factuurTotaalLabel.resize(hwidth, 1)
-		self.setChildPos(self.factuurTotaalLabelIdx, hwidth, height-1)
+		
+		# middle column
+		self.factuurBorrelTotaalLabel.resize(swidth, 1)
+		self.setChildPos(self.factuurBorrelTotaalOnafgerondLabelIdx, swidth, height-4)
+		self.factuurKantineTotaalOnafgerondLabel.resize(swidth, 1)
+		self.setChildPos(self.factuurKantineTotaalOnafgerondLabelIdx, swidth, height-3)
+		self.factuurEmballageTotaalOnafgerondLabel.resize(swidth, 1)
+		self.setChildPos(self.factuurEmballageTotaalOnafgerondLabelIdx, swidth, height-2)
+		self.factuurOverigeTotaalOnafgerondLabel.resize(swidth, 1)
+		self.setChildPos(self.factuurOverigeTotaalOnafgerondLabelIdx, swidth, height-1)
+		
+		#right column
+		
+		self.factuurBorrelmargeTotaalLabel.resize(swidth, 1)
+		self.setChildPos(self.factuurBorrelmargeTotaalLabelIdx, hwidth, height-4)
+		self.factuurTotaalLabel.resize(swidth, 1)
+		self.setChildPos(self.factuurTotaalLabelIdx, hwidth, height-3)
+		self.factuurTotaalOnafgerondLabel.resize(swidth, 1)
+		self.setChildPos(self.factuurTotaalOnafgerondLabelIdx, hwidth, height-2)
 
 class factuurInfobox(Container):
 	def __init__(self, width, height, factuur):
