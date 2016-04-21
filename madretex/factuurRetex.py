@@ -122,11 +122,11 @@ def factuurRetex(factuur, budget):
     
     texCode = template % info
 
-    texFilename = path + "/" + "facturen/" + _assoc + "_" + str(info['factuurnummer']) + ".tex"
-    auxFilename = path + "/" + _assoc + "_" + str(info['factuurnummer']) + ".aux"
-    logFilename = path + "/" + _assoc + "_" + str(info['factuurnummer']) + ".log"
-    pdfFilename = path + "/" + _assoc + "_" + str(info['factuurnummer']) + ".pdf"
-    pdf2Filename = path + "/" + "facturen/" + _assoc + "_" + str(info['factuurnummer']) + ".pdf"
+    texFilename = "facturen/" + _assoc + "_" + str(info['factuurnummer']) + ".tex"
+    auxFilename = _assoc + "_" + str(info['factuurnummer']) + ".aux"
+    logFilename = _assoc + "_" + str(info['factuurnummer']) + ".log"
+    pdfFilename = _assoc + "_" + str(info['factuurnummer']) + ".pdf"
+    pdf2Filename = "facturen/" + _assoc + "_" + str(info['factuurnummer']) + ".pdf"
     
     texfile = open(texFilename, "w")
     texfile.write(texCode)
