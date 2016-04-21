@@ -116,8 +116,10 @@ def factuurRetex(factuur, budget):
         info['speciaalsaldona'] = 0.0
         
     clear()
+    oldpath = os.cwd()
     path = "/".join(sys.argv[0].split("/")[:-1])
-    info['path'] = path
+    os.system("cd "+path)
+    
     texCode = template % info
 
     texFilename = path + "/" + "facturen/" + _assoc + "_" + str(info['factuurnummer']) + ".tex"
@@ -140,7 +142,7 @@ def factuurRetex(factuur, budget):
         os.system("mv " + pdfFilename + " " + pdf2Filename)
         os.system("rm " + auxFilename)
         os.system("rm " + logFilename)
-    
+    os.system(oldpath)
     return budget
 
 

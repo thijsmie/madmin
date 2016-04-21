@@ -17,7 +17,7 @@ template = R"""
 
 \begin{document}
 \flushright
-\includegraphics[width=5cm]{%(path)solympuslogo} \\
+\includegraphics[width=5cm]{olympuslogo} \\
 
 Heyendaalseweg 135\\
 6525 AJ\ Nijmegen \\
