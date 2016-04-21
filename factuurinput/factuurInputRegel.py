@@ -2,7 +2,9 @@ from gui_lib.textline import Textline
 from gui_lib.container import Container
 from gui_lib.label import Label
 from productLine import ProductLine
+from productSuggestion import getBtw
 import curses
+import math
 
 _regelLayout = [
 	('Productnaam/omschrijving', 2, ProductLine),
@@ -67,14 +69,17 @@ class FactuurInputRegel(Container):
 			self.setChildPos(self.fieldControlIdx[i], offset, 0)
 			offset += _regelLayout[i][1] * self.boxPerWeight
 	
-	def generateFactuurRegel(self, invertAmount):
+	def generateFactuurRegel(self, invertAmount, addBtw):
 		result = {}
+		mult = 1
 		
 		if self.fieldControl[0].text == "":
 			return (True, False, '')
 		
 		if self.fieldControl[0].currentID is not None:
 			result['product_id'] = self.fieldControl[0].currentID
+			if addBtw:
+			    mult += float(getBtw(result['product_id'])/1000.)
 		else:
 			result['naam'] = self.fieldControl[0].text
 			result['btw'] = 0
@@ -85,12 +90,12 @@ class FactuurInputRegel(Container):
 			(isOk, stukprijs) = parseMoney(self.fieldControl[2].text)
 			if not isOk:
 				return (False, False, "Invalid stukprijs")
-			result['stukprijs'] = stukprijs
+			result['stukprijs'] = math.ceil(stukprijs * mult)
 		if self.fieldControl[3].text != "":
 			(isOk, totaalprijs) = parseMoney(self.fieldControl[3].text)
 			if not isOk:
 				return (False, False, "Invalid totaalprijs")
-			result['totaalprijs'] = totaalprijs
+			result['totaalprijs'] = math.ceil(totaalprijs * mult)
 		
 		return (True, True, result)
 		

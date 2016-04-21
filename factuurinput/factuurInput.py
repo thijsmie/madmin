@@ -86,7 +86,7 @@ class FactuurInput(Container):
 		
 		factuur = result[2]
 		
-		result = self.factuurRegelList.generateFactuurRegels(factuur['type'] == 'inkoop')
+		result = self.factuurRegelList.generateFactuurRegels(factuur['type'] == 'inkoop', factuur['dobtw'] == 'metbtw')
 		
 		if not result[0] or not result[1]:
 			return result

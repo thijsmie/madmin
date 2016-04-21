@@ -33,7 +33,12 @@ class FactuurData(Container):
 		self.typeValue.addOption('inkoop')
 		self.typeValue.addOption('verkoop')
 		
+		self.btwValue = Optionbox(1,1)
+		self.btwValue.addOption('metbtw')
+		self.btwValue.addOption('zonderbtw')
+		
 		self.typeValueIdx = self.addChild(0,0,self.typeValue)
+		self.btwValueIdx = self.addChild(0,0, self.btwValue)
 		self.otherPartyLabelIdx = self.addChild(0,0,self.otherPartyLabel)
 		self.otherPartyValueIdx = self.addChild(0,0,self.otherPartyValue)
 		self.leverDatumLabelIdx = self.addChild(0,0,self.leverDatumLabel)
@@ -50,8 +55,10 @@ class FactuurData(Container):
 		#  ignore height, selfdetermined
 		self.width = width
 		
-		self.typeValue.resize(width,1)
+		self.typeValue.resize(int(width/2.),1)
+		self.btwValue.resize(int(width/2.),1)
 		self.setChildPos(self.typeValueIdx, 0,0)
+		self.setChildPos(self.btwValueIdx, int(width/2.), 0)
 		
 		if (self.width-1)/2 - self.labelWidth >= self.minValueWidth:
 			#two column layout
@@ -125,6 +132,7 @@ class FactuurData(Container):
 		result = {}
 		
 		result['type'] = self.typeValue.text
+		result['dobtw'] = self.btwValue.text
 		
 		if self.otherPartyValue.currentID is not None:
 			result['vereniging'] = self.otherPartyValue.currentID

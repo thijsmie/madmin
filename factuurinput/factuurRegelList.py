@@ -13,11 +13,11 @@ class FactuurRegelList(Listbox):
 		
 		return super(FactuurRegelList, self).keyEvent(key)
 	
-	def generateFactuurRegels(self, invertAmount):
+	def generateFactuurRegels(self, invertAmount, addBtw):
 		result = []
 		
 		for item in self.items:
-			regel = item.generateFactuurRegel(invertAmount)
+			regel = item.generateFactuurRegel(invertAmount, addBtw)
 			if not regel[0]:
 				return regel
 			if regel[1]:
