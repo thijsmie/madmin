@@ -20,7 +20,7 @@ class factuurListItem(Label):
     
     def keyEvent(self, key):
         if key == ord('\n'):
-            for i in range(self.number, 0, -1):
+            for i in range(self.number, -1, -1):
                 self.ppointer.budget = factuurRetex(self.ppointer.facturen[i], self.ppointer.budget)
             
                 
