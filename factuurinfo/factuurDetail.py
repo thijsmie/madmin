@@ -4,7 +4,7 @@ from gui_lib.listbox import Listbox
 from gui_lib.fill import Fill
 from verenigingNaamCoupler import getVerenigingNaam
 from productNaamCoupler import getProductType
-from math import copysign
+from math import copysign, floor
 import curses
 
 def strConvert(value):
