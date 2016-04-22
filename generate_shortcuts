@@ -36,10 +36,9 @@ echo '
 #!/bin/bash
 
 cd madmin
-git fetch origin
-git merge -s ours origin/master
+git pull
 cd ..
-echo "Updated, now run ./madmin/generate_shortcuts"
+echo "Updated, now run generate_shortcuts"
 '>../update
 
 chmod +x ../factuurinfo
@@ -47,3 +46,4 @@ chmod +x ../factuurinput
 chmod +x ../budgetinfo
 chmod +x ../madretex
 chmod +x ../madbridge
+chmod +x ../update
