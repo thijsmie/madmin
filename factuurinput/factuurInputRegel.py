@@ -45,60 +45,60 @@ def parseMoney(text):
     return (True, value)
 
 class FactuurInputRegel(Container):
-	def __init__(self, width, height):
-		super(FactuurInputRegel, self).__init__(width, height)
-		
-		self.totalWeight = 0
-		self.fieldControl = []
-		self.fieldControlIdx = []
-		for i in range(0, len(_regelLayout)):
-			self.totalWeight += _regelLayout[i][1]
-			self.fieldControl.append(_regelLayout[i][2](0))
-			self.fieldControlIdx.append(self.addChild(0,0,self.fieldControl[-1]))
-		
-		self.resize(width, height)
-	
-	def resize(self, width, height):
-		self.width = width
-		self.height = height
-		self.boxPerWeight = width/self.totalWeight
-		
-		offset = 0
-		for i in range(0, len(_regelLayout)):
-			self.fieldControl[i].resize(self.boxPerWeight * _regelLayout[i][1],1)
-			self.setChildPos(self.fieldControlIdx[i], offset, 0)
-			offset += _regelLayout[i][1] * self.boxPerWeight
-	
-	def generateFactuurRegel(self, invertAmount, addBtw):
-		result = {}
-		mult = 1
-		
-		if self.fieldControl[0].text == "":
-			return (True, False, '')
-		
-		if self.fieldControl[0].currentID is not None:
-			result['product_id'] = self.fieldControl[0].currentID
-			if addBtw:
-			    mult += float(getBtw(result['product_id'])/1000.)
-		else:
-			result['naam'] = self.fieldControl[0].text
-			result['btw'] = 0
-		result['aantal'] = int(self.fieldControl[1].text)
-		if invertAmount:
-			result['aantal'] = -result['aantal']
-		if self.fieldControl[2].text != "":
-			(isOk, stukprijs) = parseMoney(self.fieldControl[2].text)
-			if not isOk:
-				return (False, False, "Invalid stukprijs")
-			result['stukprijs'] = math.ceil(stukprijs * mult)
-		if self.fieldControl[3].text != "":
-			(isOk, totaalprijs) = parseMoney(self.fieldControl[3].text)
-			if not isOk:
-				return (False, False, "Invalid totaalprijs")
-			result['totaalprijs'] = math.ceil(totaalprijs * mult)
-		
-		return (True, True, result)
-		
+    def __init__(self, width, height):
+        super(FactuurInputRegel, self).__init__(width, height)
+
+        self.totalWeight = 0
+        self.fieldControl = []
+        self.fieldControlIdx = []
+        for i in range(0, len(_regelLayout)):
+            self.totalWeight += _regelLayout[i][1]
+            self.fieldControl.append(_regelLayout[i][2](0))
+            self.fieldControlIdx.append(self.addChild(0,0,self.fieldControl[-1]))
+
+        self.resize(width, height)
+
+    def resize(self, width, height):
+        self.width = width
+        self.height = height
+        self.boxPerWeight = width/self.totalWeight
+
+        offset = 0
+        for i in range(0, len(_regelLayout)):
+            self.fieldControl[i].resize(self.boxPerWeight * _regelLayout[i][1],1)
+            self.setChildPos(self.fieldControlIdx[i], offset, 0)
+            offset += _regelLayout[i][1] * self.boxPerWeight
+
+    def generateFactuurRegel(self, invertAmount, addBtw):
+        result = {}
+        mult = 1
+
+        if self.fieldControl[0].text == "":
+            return (True, False, '')
+
+        if self.fieldControl[0].currentID is not None:
+            result['product_id'] = self.fieldControl[0].currentID
+            if addBtw:
+                mult += float(getBtw(result['product_id'])/1000.)
+        else:
+            result['naam'] = self.fieldControl[0].text
+            result['btw'] = 0
+        result['aantal'] = int(self.fieldControl[1].text)
+        if invertAmount:
+            result['aantal'] = -result['aantal']
+        if self.fieldControl[2].text != "":
+            (isOk, stukprijs) = parseMoney(self.fieldControl[2].text)
+            if not isOk:
+                return (False, False, "Invalid stukprijs")
+            result['stukprijs'] = math.ceil(stukprijs * mult)
+        if self.fieldControl[3].text != "":
+            (isOk, totaalprijs) = parseMoney(self.fieldControl[3].text)
+            if not isOk:
+                return (False, False, "Invalid totaalprijs")
+            result['totaalprijs'] = math.ceil(totaalprijs * mult)
+
+        return (True, True, result)
+
 
 class FactuurInputHeader(Container):
     def __init__(self, width, height):

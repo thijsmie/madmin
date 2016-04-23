@@ -25,7 +25,7 @@ class FactuurBewerk(Container):
 
         self.factuur = factuur
         self.manager = manager
-        
+
         self.resize(width, height)
 
     def resize(self, width, height):
@@ -76,7 +76,7 @@ class FactuurBewerk(Container):
         self.statusLine.setText("")
         unsetCursor()
         self.manager.pop()
-        
+
         self.resize(self.width, self.height)
 
     def generateFactuur(self):

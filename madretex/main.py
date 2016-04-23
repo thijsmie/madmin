@@ -32,4 +32,3 @@ try:
 except ServerCallException:
     print >> sys.stderr, "Probleem in de verbinding met server."
     sys.exit(1)
-

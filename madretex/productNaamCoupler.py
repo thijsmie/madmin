@@ -45,4 +45,3 @@ def getVerenigingId(product_naam):
     if product_naam not in _id_dict:
         raise UnknownProductException
     return _id_dict[product_naam]
-    

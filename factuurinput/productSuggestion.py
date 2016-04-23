@@ -7,23 +7,23 @@ _productNumberList = []
 _productBtwList = {}
 
 def _prodSugInit():
-	global _isInitialized
-	global _productList
-	global _productNameList
-	global _productNumberList
-	global _productBtwList
-	_productList = remote_call('/product/all')
+    global _isInitialized
+    global _productList
+    global _productNameList
+    global _productNumberList
+    global _productBtwList
+    _productList = remote_call('/product/all')
 
-	# Build product name and number lists
-	for product in _productList:
-		_productNameList.append((product['naam'].encode('utf-8'), product['id']))
-		_productNumberList.append((product['leverancier_id'].encode('utf-8'), product['id']))
-		_productBtwList[str(product["id"])] = product["btw"]
-	_productNameList.sort()
-	_productNumberList.sort()
-	
-	_isInitialized = True
-	
+    # Build product name and number lists
+    for product in _productList:
+        _productNameList.append((product['naam'].encode('utf-8'), product['id']))
+        _productNumberList.append((product['leverancier_id'].encode('utf-8'), product['id']))
+        _productBtwList[str(product["id"])] = product["btw"]
+    _productNameList.sort()
+    _productNumberList.sort()
+
+    _isInitialized = True
+
 def getBtw(pid):
     global _productBtwList
     return _productBtwList[str(pid)]

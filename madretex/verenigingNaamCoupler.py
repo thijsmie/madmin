@@ -44,4 +44,3 @@ def getVerenigingId(vereniging_naam):
     if vereniging_naam not in _id_dict:
         raise UnknownVerenigingException
     return _id_dict[vereniging_naam]
-    

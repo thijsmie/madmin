@@ -10,18 +10,18 @@ class verenigingListItem(Label):
         self.manager = manager
         super(verenigingListItem,self).__init__(width, 1, vereniging_info[1].encode('utf-8'))
         self.vereniging_info = vereniging_info
-    
+
     def keyEvent(self, key):
         if key == ord('\n'):
             self.manager.push(factuurList(1,1,
                 remote_call('/factuur/vereniging',[('vereniging_id', self.vereniging_info[0])]),
                 remote_call('/budget/vereniging',[('vereniging_id', self.vereniging_info[0])])[0]['current'],
                 self.manager))
-        
+
     def onFocus(self):
         self.setAttribute(curses.A_REVERSE)
         return True
-    
+
     def offFocus(self):
         self.setAttribute(curses.A_NORMAL)
 
@@ -36,7 +36,7 @@ class verenigingList(Container):
             self.listbox.append(verenigingListItem(width,vereniging_info,manager))
         self.headerId = self.addChild(0,0, self.header)
         self.listboxId = self.addChild(0,2,self.listbox)
-    
+
     def resize(self, width, height):
         self.width = width
         self.height = height

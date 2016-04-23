@@ -18,14 +18,14 @@ from template import template
 #Helper function definitions
 def clear():
     os.system('cls' if os.name == 'nt' else 'clear')
-    
+
 def parse_money(text):
     value = 0
-    
+
     segments = text.split(',')
     if len(segments) > 2:
         return (False, 0)
-        
+
     euros = 0
     cents = 0
     for i in range(0, len(segments[0])):
@@ -33,7 +33,7 @@ def parse_money(text):
             return (False, 0)
         euros *= 10
         euros += ord(segments[0][i]) - ord('0')
-    
+
     if len(segments) == 2:
         if len(segments[1]) > 2:
             return (False, 0)
@@ -42,37 +42,37 @@ def parse_money(text):
                 return (False, 0)
             cents *= 10
             cents += ord(segments[1][i]) - ord('0')
-    
+
         if len(segments[1]) == 1:
             cents *= 10;
-    
+
     value = euros*100 + cents
-    
+
     return (True, value)
-    
+
 def tex_escape(text):
     CHARS = {
         '&':  r'\&',
-        '%':  r'\%', 
-        '$':  r'\$', 
-        '#':  r'\#', 
-        '_':  r'\letterunderscore{}', 
-        '{':  r'\letteropenbrace{}', 
+        '%':  r'\%',
+        '$':  r'\$',
+        '#':  r'\#',
+        '_':  r'\letterunderscore{}',
+        '{':  r'\letteropenbrace{}',
         '}':  r'\letterclosebrace{}',
-        '~':  r'\lettertilde{}', 
-        '^':  r'\letterhat{}', 
+        '~':  r'\lettertilde{}',
+        '^':  r'\letterhat{}',
         '\\': r'\letterbackslash{}',
     }
 
     return "".join([CHARS.get(char, char) for char in text])
 
 def _moneyConvert(value):
-        cents = value % 100
-        value /= 100
-        if cents < 10:
-            return str(value)+ ",0" + str(cents)
-        return str(value) + "," + str(cents)
-        
+    cents = value % 100
+    value /= 100
+    if cents < 10:
+        return str(value)+ ",0" + str(cents)
+    return str(value) + "," + str(cents)
+
 def factuurRetex(factuur, budget):
     #process regels
     regels = ""
@@ -84,7 +84,7 @@ def factuurRetex(factuur, budget):
             naam = regel['naam']
         else:
             naam = prd.getProductNaam(regel['product_id'])
-        regels += naam + " & " + str(regel['aantal']) + " & " 
+        regels += naam + " & " + str(regel['aantal']) + " & "
         regels += _moneyConvert(regel['stukprijs']) + " & " + _moneyConvert(regel['totaalprijs']) + "\\\\\n"
         totaal += copysign(regel['totaalprijs'], regel['aantal'])
 
@@ -105,7 +105,7 @@ def factuurRetex(factuur, budget):
         info['borrelsaldo'] = budget/100.0
     else:
         info['borrelsaldo'] = 0.0
-        
+
     budget += totaal
 
     if 'saldo_speciaal' in factuur:
@@ -114,12 +114,12 @@ def factuurRetex(factuur, budget):
     else:
         info['speciaalsaldo'] = ""
         info['speciaalsaldona'] = 0.0
-        
+
     clear()
     oldpath = os.getcwd()
     path = "/".join(sys.argv[0].split("/")[:-1])
     os.chdir(path)
-    
+
     texCode = template % info
 
     texFilename = "facturen/" + _assoc + "_" + str(info['factuurnummer']) + ".tex"
@@ -127,7 +127,7 @@ def factuurRetex(factuur, budget):
     logFilename = _assoc + "_" + str(info['factuurnummer']) + ".log"
     pdfFilename = _assoc + "_" + str(info['factuurnummer']) + ".pdf"
     pdf2Filename = "facturen/" + _assoc + "_" + str(info['factuurnummer']) + ".pdf"
-    
+
     texfile = open(texFilename, "w")
     texfile.write(texCode)
     texfile.close()
@@ -144,5 +144,3 @@ def factuurRetex(factuur, budget):
         os.system("rm " + logFilename)
     os.chdir(oldpath)
     return budget
-
-
