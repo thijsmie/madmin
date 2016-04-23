@@ -1,5 +1,6 @@
 import widget
 import curses
+import traceback
 
 _stop = False
 _WindowWidget = None
@@ -26,6 +27,9 @@ def unsetCursor():
     curses.curs_set(0)
 
 def stepFocus():
+    with open("stack","a") as f:
+        f.write("---\n")
+        traceback.print_stack(file=f)
     if not _WindowWidget.changeFocus():
         _WindowWidget.onFocus()
 

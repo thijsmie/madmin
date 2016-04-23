@@ -43,4 +43,4 @@ class DisplayStack(Widget):
 
     def keyEvent(self, key):
         if len(self.pages):
-            self.pages[-1].keyEvent(key)
+            return self.pages[-1].keyEvent(key)
