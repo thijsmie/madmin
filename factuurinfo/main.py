@@ -13,10 +13,10 @@ import sys
 cmd_parser = argparse.ArgumentParser(description='Bekijke facturen')
 
 cmd_parser.add_argument(
-	'--user', '-u',
-	type=str,
-	help='Gebruikersnaam om mee in te loggen (standaard de gebruikersnaam waarme is ingelogd op de lokale machine).',
-	default=getpass.getuser()
+        '--user', '-u',
+        type=str,
+        help='Gebruikersnaam om mee in te loggen (standaard de gebruikersnaam waarme is ingelogd op de lokale machine).',
+        default=getpass.getuser()
 )
 
 arguments = cmd_parser.parse_args()
@@ -26,10 +26,9 @@ prompt_login(arguments.user)
 
 #Start main application
 try:
-	screenManager = factuurManager(1,1)
-	screenManager.push(verenigingList(1,1,getVerenigingNaamList(),screenManager))
-	mainloop(screenManager)
+    screenManager = factuurManager(1,1)
+    screenManager.push(verenigingList(1,1,getVerenigingNaamList(),screenManager))
+    mainloop(screenManager)
 except ServerCallException:
-	print >> sys.stderr, "Probleem in de verbinding met server."
-	sys.exit(1)
-
+    print >> sys.stderr, "Probleem in de verbinding met server."
+    sys.exit(1)

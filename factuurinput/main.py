@@ -9,10 +9,10 @@ import sys
 cmd_parser = argparse.ArgumentParser(description='Voer facturen in')
 
 cmd_parser.add_argument(
-	'--user', '-u',
-	type=str,
-	help='Gebruikersnaam om mee in te loggen (standaard de gebruikersnaam waarme is ingelogd op de lokale machine).',
-	default=getpass.getuser()
+        '--user', '-u',
+        type=str,
+        help='Gebruikersnaam om mee in te loggen (standaard de gebruikersnaam waarme is ingelogd op de lokale machine).',
+        default=getpass.getuser()
 )
 
 arguments = cmd_parser.parse_args()
