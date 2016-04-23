@@ -1,0 +1,49 @@
+#!/bin/bash
+
+
+# Factuurinfo:
+echo '
+#!/bin/bash
+python madmin/factuurinfo/main.py
+'>../factuurinfo
+
+# Factuurinput:
+echo '
+#!/bin/bash
+python madmin/factuurinput/main.py
+'>../factuurinput
+
+# Budgetinfo:
+echo '
+#!/bin/bash
+python madmin/budgetinfo/main.py BBB BeeVee Cognac Desda Leonardo Marie-Curie Olympus Sigma Thalia
+'>../budgetinfo
+
+# Madretex:
+echo '
+#!/bin/bash
+python madmin/madretex/main.py
+'>../madretex
+
+# Madbridge:
+echo '
+#!/bin/bash
+python madmin/madbridge/main.py
+'>../madbridge
+
+# Update:
+echo '
+#!/bin/bash
+
+cd madmin
+git pull
+cd ..
+echo "Updated, now run generate_shortcuts"
+'>../update
+
+chmod +x ../factuurinfo
+chmod +x ../factuurinput
+chmod +x ../budgetinfo
+chmod +x ../madretex
+chmod +x ../madbridge
+chmod +x ../update
