@@ -52,8 +52,8 @@ class FactuurBewerk(Container):
         self.setChildPos(self.statusLineIdx, min(width, 8), vOffset)
 
 
-    def sendFactuur(self):
-        result = self.generateFactuur()
+    def sendEdit(self):
+        result = self.generateRegels()
 
         if not result[0]:
             self.statusLine.setText(result[2])
@@ -64,7 +64,10 @@ class FactuurBewerk(Container):
             return
 
         try:
-            submitResult = remote_call('/factuur/edit', jsondata = result[2])
+            data = {}
+            data["factuur_id"] = factuur["id"]
+            data["regels"] = result[2]
+            submitResult = remote_call('/factuur/bewerk', jsondata = data)
         except ServerCallException:
             self.statusLine.setText("Kon geen verbinding maken met server.")
             return
@@ -79,19 +82,11 @@ class FactuurBewerk(Container):
 
         self.resize(self.width, self.height)
 
-    def generateFactuur(self):
-        result = self.factuurData.generateFactuur()
-
-        if not result[0] or not result[1]:
-            return result
-
-        factuur = result[2]
+    def generateRegels(self):
 
         result = self.factuurRegelList.generateFactuurRegels(factuur['type'] == 'inkoop')
 
         if not result[0] or not result[1]:
             return result
 
-        factuur['regels'] = result[2]
-
-        return (True, True, factuur)
+        return (True, True, result[2])
