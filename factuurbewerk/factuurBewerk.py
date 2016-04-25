@@ -65,7 +65,7 @@ class FactuurBewerk(Container):
 
         try:
             data = {}
-            data["factuur_id"] = factuur["id"]
+            data["factuur_id"] = self.factuur["id"]
             data["regels"] = result[2]
             submitResult = remote_call('/factuur/bewerk', jsondata = data)
         except ServerCallException:
