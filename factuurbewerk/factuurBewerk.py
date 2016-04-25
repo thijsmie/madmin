@@ -15,7 +15,7 @@ class FactuurBewerk(Container):
         self.factuurListHeader = FactuurInputHeader(1,1)
         self.factuurRegelList = FactuurRegelList(1,1)
         self.statusLine = Label(1,1,"")
-        self.submitButton = Button(1,1,self.sendFactuur,"Submit")
+        self.submitButton = Button(1,1,self.sendEdit,"Submit")
 
         self.factuurListHeaderIdx = self.addChild(0,0, self.factuurListHeader)
         self.statusLineIdx = self.addChild(0,0,self.statusLine)
