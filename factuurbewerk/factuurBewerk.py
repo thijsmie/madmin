@@ -84,7 +84,7 @@ class FactuurBewerk(Container):
 
     def generateRegels(self):
 
-        result = self.factuurRegelList.generateFactuurRegels(factuur['type'] == 'inkoop')
+        result = self.factuurRegelList.generateFactuurRegels(self.factuur['type'] == 'inkoop')
 
         if not result[0] or not result[1]:
             return result
