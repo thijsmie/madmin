@@ -37,6 +37,9 @@ def findSuggestion(curInput):
 
     low = -1
     high = len(_productNameList)-1
+    if len(_productNameList[high]) == 0:
+        return (None,'')
+        
     while high - low > 1:
         mid = (high+low)/2
         if _productNameList[mid][0] >= curInput:
@@ -60,3 +63,4 @@ def findSuggestion(curInput):
         return (_productNumberList[high][1], _productNumberList[high][0])
 
     return (None, '')
+
