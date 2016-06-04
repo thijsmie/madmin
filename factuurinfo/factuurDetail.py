@@ -110,6 +110,7 @@ class factuurDetail(Container):
         self.factuurRegelBoxIdx = self.addChild(0,0,self.factuurRegelBox)
 
         self.factuurBorrelTotaal = 0
+        self.factuurBorrelmargeTotaal = 0
         self.factuurKantineTotaal = 0
         self.factuurEmballageTotaal = 0
         self.factuurOverigeTotaal = 0
@@ -128,6 +129,7 @@ class factuurDetail(Container):
                 elif type=='borrel':
                     self.factuurBorrelTotaal += copysign(regel['totaalprijs'], regel['aantal'])
                     self.factuurBorrelTotaalOnafgerond += regel['stukprijs'] * regel['aantal']
+                    self.factuurBorrelmargeTotaal += floor(regel['stukprijs']/1.03) * regel['aantal']
                 elif type=='emballage':
                     self.factuurEmballageTotaal += copysign(regel['totaalprijs'], regel['aantal'])
                     self.factuurEmballageTotaalOnafgerond += regel['stukprijs'] * regel['aantal']
@@ -140,7 +142,7 @@ class factuurDetail(Container):
 
         self.factuurBorrelTotaalLabel = Label(0,0,"Borreltotaal: " + moneyConvert(int(self.factuurBorrelTotaal)))
         self.factuurBorrelTotaalLabelIdx = self.addChild(0,0,self.factuurBorrelTotaalLabel)
-        self.factuurBorrelmargeTotaalLabel = Label(0,0,"Borrelmargetotaal: " + moneyConvert(int(floor(self.factuurBorrelTotaal/1.03))))
+        self.factuurBorrelmargeTotaalLabel = Label(0,0,"Borrelmargetotaal: " + moneyConvert(int(self.factuurBorrelmargeTotaal))
         self.factuurBorrelmargeTotaalLabelIdx = self.addChild(0,0,self.factuurBorrelmargeTotaalLabel)
         self.factuurKantineTotaalLabel = Label(0,0,"Kantinetotaal: " + moneyConvert(int(self.factuurKantineTotaal)))
         self.factuurKantineTotaalLabelIdx = self.addChild(0,0,self.factuurKantineTotaalLabel)
