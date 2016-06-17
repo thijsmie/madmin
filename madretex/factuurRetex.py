@@ -1,8 +1,5 @@
-#MadminToConscribo.py
-
 #Standard Library imports
 from math import copysign
-import getpass
 import os
 import subprocess
 import sys
@@ -106,7 +103,7 @@ def factuurRetex(factuur, budget):
     else:
         info['borrelsaldo'] = 0.0
 
-    budget += totaal
+    budget -= totaal
 
     if 'saldo_speciaal' in factuur:
         info['speciaalsaldo'] = ""
@@ -116,31 +113,28 @@ def factuurRetex(factuur, budget):
         info['speciaalsaldona'] = 0.0
 
     clear()
-    oldpath = os.getcwd()
-    path = "/".join(sys.argv[0].split("/")[:-1])
-    os.chdir(path)
-
+    
     texCode = template % info
+    
+    writedir = os.path.dirname(os.path.realpath(__file__)) + "/facturen/"
 
-    texFilename = "facturen/" + _assoc + "_" + str(info['factuurnummer']) + ".tex"
-    auxFilename = _assoc + "_" + str(info['factuurnummer']) + ".aux"
-    logFilename = _assoc + "_" + str(info['factuurnummer']) + ".log"
-    pdfFilename = _assoc + "_" + str(info['factuurnummer']) + ".pdf"
-    pdf2Filename = "facturen/" + _assoc + "_" + str(info['factuurnummer']) + ".pdf"
-
+    texFilename = writedir + _assoc + "_" + str(info['factuurnummer']) + ".tex"
+    auxFilename = writedir + _assoc + "_" + str(info['factuurnummer']) + ".aux"
+    logFilename = writedir + _assoc + "_" + str(info['factuurnummer']) + ".log"
+    pdfFilename = writedir + _assoc + "_" + str(info['factuurnummer']) + ".pdf"
+  
     texfile = open(texFilename, "w")
     texfile.write(texCode)
     texfile.close()
 
-    if subprocess.check_call(["pdflatex", texFilename],
+    if subprocess.check_call(["pdflatex", "-output-directory "+writedir, texFilename],
                              stdout=subprocess.PIPE,
                              stderr=subprocess.PIPE) != 0:
         print "Was unable to compile PDF."
         sys.exit()
     else:
         print "Pdf produced"
-        os.system("mv " + pdfFilename + " " + pdf2Filename)
         os.system("rm " + auxFilename)
         os.system("rm " + logFilename)
-    os.chdir(oldpath)
+        
     return budget
