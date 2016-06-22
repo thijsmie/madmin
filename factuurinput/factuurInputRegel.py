@@ -90,13 +90,12 @@ class FactuurInputRegel(Container):
             (isOk, stukprijs) = parseMoney(self.fieldControl[2].text)
             if not isOk:
                 return (False, False, "Invalid stukprijs")
-            result['stukprijs'] = int(math.ceil(stukprijs * mult))
+            result['stukprijs'] = int(round(stukprijs * mult))
         if self.fieldControl[3].text != "":
             (isOk, totaalprijs) = parseMoney(self.fieldControl[3].text)
             if not isOk:
                 return (False, False, "Invalid totaalprijs")
-            result['totaalprijs'] = int(math.ceil(totaalprijs * mult))
-
+            result['totaalprijs'] = int(round(totaalprijs * mult))
         return (True, True, result)
 
 
