@@ -142,7 +142,7 @@ class factuurDetail(Container):
 
         self.factuurBorrelTotaalLabel = Label(0,0,"Borreltotaal: " + moneyConvert(int(self.factuurBorrelTotaal)))
         self.factuurBorrelTotaalLabelIdx = self.addChild(0,0,self.factuurBorrelTotaalLabel)
-        self.factuurBorrelmargeTotaalLabel = Label(0,0,"Borrelmargetotaal: " + moneyConvert(int(self.factuurBorrelmargeTotaal))
+        self.factuurBorrelmargeTotaalLabel = Label(0,0,"Borrelmargetotaal: " + moneyConvert(int(self.factuurBorrelmargeTotaal)))
         self.factuurBorrelmargeTotaalLabelIdx = self.addChild(0,0,self.factuurBorrelmargeTotaalLabel)
         self.factuurKantineTotaalLabel = Label(0,0,"Kantinetotaal: " + moneyConvert(int(self.factuurKantineTotaal)))
         self.factuurKantineTotaalLabelIdx = self.addChild(0,0,self.factuurKantineTotaalLabel)
