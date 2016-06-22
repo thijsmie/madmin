@@ -184,13 +184,13 @@ def process_factuur(factuur, fac_id):
     emailText = MIMEText(emailContentTemplate % info, 'plain')
 
     if 'vereniging' in factuur:
-        receiver = query_vereniging(factuur['vereniging'])[0]['email']
+        receiver = [query_vereniging(factuur['vereniging'])[0]['email']]
     else:
-        receiver = default_receiver
+        receiver = []
 
     email = MIMEMultipart()
     email['Subject'] = emailSubjectTemplate % info
-    email['To'] = receiver
+    email['To'] = [default_receiver].append(receiver)
     email['From'] = factuur_sender
     email.attach(emailText)
     email.attach(pdfAttachment)
