@@ -37,7 +37,6 @@ class FactuurData(Container):
         self.btwValue.addOption('zonderbtw')
         self.btwValue.addOption('metbtw')
 
-
         self.typeValueIdx = self.addChild(0,0,self.typeValue)
         self.btwValueIdx = self.addChild(0,0, self.btwValue)
         self.otherPartyLabelIdx = self.addChild(0,0,self.otherPartyLabel)
