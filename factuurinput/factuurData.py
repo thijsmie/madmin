@@ -34,8 +34,8 @@ class FactuurData(Container):
         self.typeValue.addOption('verkoop')
 
         self.btwValue = Optionbox(1,1)
-        self.btwValue.addOption('metbtw')
         self.btwValue.addOption('zonderbtw')
+        self.btwValue.addOption('metbtw')
 
         self.typeValueIdx = self.addChild(0,0,self.typeValue)
         self.btwValueIdx = self.addChild(0,0, self.btwValue)
