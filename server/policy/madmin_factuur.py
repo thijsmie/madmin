@@ -197,7 +197,7 @@ def process_factuur(factuur, fac_id):
 
     s = SMTP()
     s.connect()
-    s.sendmail(factuur_sender, receiver, email.as_string())
+    s.sendmail(factuur_sender, receiver + default_receiver, email.as_string())
     s.quit()
 
     log.debug("Mail sent")
